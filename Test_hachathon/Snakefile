@@ -4,9 +4,7 @@ rule all:
 	input:
 		"essai.fastq"
 rule makefastq:
-	output:
-		"essai.fastq"
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
 	shell:
-		'fasterq-dump --split-files SRR628582'
+		'fastq-dump  SRR11180057'
