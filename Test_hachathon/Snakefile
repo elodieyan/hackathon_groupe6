@@ -1,17 +1,19 @@
-container:"https://github.com/evolbioinfo/dockerfiles/tree/master/sratoolkit/v2.5.7"
 #j'ai lancé indépendamment des rules le telechargment pcq c'était 
 #chiant de définir un output vu que cette fct telecharge directement dans le repertoire et sous le 
 #même nom avec un .sra derrière, il faudra voir comment on peut utiliser un truc expand ou autre pour
 #télécharger tout d'un coup.
-shell('prefetch SRR628582')
+
 rule all:
 	input:
-		"essai.fastq"
+		"/Users/Chanco/Desktop/Test_hachathon/essai.fastq"
+
 rule makefastq:
-	input:
-		"SRR628582.sra"
-	output:
-		"essai.fastq"
 	
+	output:
+		"/Users/Chanco/Desktop/Test_hachathon/essai.fastq"
+
+	singularity : 
+		"docker://evolbioinfo/sratoolkit:v2.5.7"
+
 	run:
-		shell('fasterq-dump --split-files SRR628582.sra -o {output}')
+		shell('fasterq-dump --split-files SRR628582 > {output}')
