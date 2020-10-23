@@ -1,4 +1,3 @@
-container:"https://github.com/evolbioinfo/dockerfiles/tree/master/sratoolkit/v2.5.7"
 
 #j'ai lancé indépendamment des rules le telechargment pcq c'était 
 #chiant de définir un output vu que cette fct telecharge directement dans le repertoire et sous le 
@@ -16,6 +15,9 @@ rule makefastq:
 		"SRR628582.sra"
 	output:
 		"essai.fastq"
+	
+	container:
+		"container:"https://github.com/evolbioinfo/dockerfiles/tree/master/sratoolkit/v2.5.7"
 
 	run:
 		shell('fasterq-dump --split-files SRR628582.sra -o {output}')
