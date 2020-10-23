@@ -1,6 +1,5 @@
 #!/bin/bash
-set -euo pipefail
-IFS=$'\n\t'
+
 
 #j'ai lancé indépendamment des rules le telechargment pcq c'était 
 #chiant de définir un output vu que cette fct telecharge directement dans le repertoire et sous le 
