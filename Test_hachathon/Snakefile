@@ -5,11 +5,15 @@
 
 rule all:
 	input:
-		"/Users/Chanco/Desktop/Test_hachathon/essai.fastq"
+		"/home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/essai.fastq"
+
 rule makefastq:
+	
 	output:
-		"/Users/Chanco/Desktop/Test_hachathon/essai.fastq"
+		/home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/essai.fastq"
+
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
-	shell:
-		'fasterq-dump --split-files SRR628582 > {output}'
+
+	run:
+		shell('fastq-dump --split-files SRR628582 > {output}')
