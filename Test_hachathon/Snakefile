@@ -5,7 +5,7 @@ container:"https://github.com/evolbioinfo/dockerfiles/tree/master/sratoolkit/v2.
 #même nom avec un .sra derrière, il faudra voir comment on peut utiliser un truc expand ou autre pour
 #télécharger tout d'un coup.
 
-shell('prefetch SRR628582')ctement
+shell('prefetch SRR628582')
 
 rule all:
 	input:
