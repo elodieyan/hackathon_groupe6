@@ -6,14 +6,10 @@
 rule all:
 	input:
 		"/Users/Chanco/Desktop/Test_hachathon/essai.fastq"
-
 rule makefastq:
-	
 	output:
 		"/Users/Chanco/Desktop/Test_hachathon/essai.fastq"
-
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
-
 	run:
 		shell('fasterq-dump --split-files SRR628582 > {output}')
