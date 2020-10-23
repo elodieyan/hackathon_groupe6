@@ -5,11 +5,11 @@
 
 rule all:
 	input:
-		"essai.txt"
+		"essai.fastq"
 rule makefastq:
 	output:
-		"essai.txt"
+		"essai.fastq"
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
 	shell:
-		'echo "blabla" > {output}'
+		' fastq-dump --split-files SRR11180057 > {output}'
