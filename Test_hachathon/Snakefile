@@ -1,4 +1,3 @@
-
 #j'ai lancé indépendamment des rules le telechargment pcq c'était 
 #chiant de définir un output vu que cette fct telecharge directement dans le repertoire et sous le 
 #même nom avec un .sra derrière, il faudra voir comment on peut utiliser un truc expand ou autre pour
