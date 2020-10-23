@@ -1,3 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
 #j'ai lancé indépendamment des rules le telechargment pcq c'était 
 #chiant de définir un output vu que cette fct telecharge directement dans le repertoire et sous le 
 #même nom avec un .sra derrière, il faudra voir comment on peut utiliser un truc expand ou autre pour
@@ -12,4 +16,4 @@ rule makefastq:
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
 	shell:
-		' fasterq-dump --split-files SRR11180057 > {output}'
+		'fasterq-dump --split-files SRR11180057 > {output}'
