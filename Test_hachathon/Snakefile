@@ -11,5 +11,5 @@ rule makefastq:
 		"essai.fastq"
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
-	run:
-		shell('fastq-dump --split-files SRR628582 > {output}')
+	shell:
+		'fastq-dump --split-files SRR628582 > {output}'
