@@ -1,8 +1,5 @@
 #!/bin/bash
 
-rule all:
-	input:
-		"essai.fastq"
 rule makefastq:
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
