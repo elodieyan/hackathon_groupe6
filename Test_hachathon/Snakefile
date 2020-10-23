@@ -5,12 +5,12 @@
 
 rule all:
 	input:
-		"/home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/essai.fastq"
+		"essai.fastq"
 
 rule makefastq:
 	
 	output:
-		/home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/essai.fastq"
+		"essai.fastq"
 
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
