@@ -9,4 +9,4 @@ rule makefastq:
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
 	shell:
-		'fasterjgdgfcq-dump  SRR11180057 > {output}'
+		'fastq-dump SRR11180057'
