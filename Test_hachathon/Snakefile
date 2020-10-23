@@ -10,4 +10,3 @@ rule makefastq:
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
 	shell:
 		'vdb-config -i'
-		'fastq-dump --split-files SRR628582'
