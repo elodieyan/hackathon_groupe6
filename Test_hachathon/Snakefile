@@ -13,6 +13,6 @@ rule makefastq:
 	output:
 		"essai.fastq"
 	container:
-		"container:"https://github.com/evolbioinfo/dockerfiles/tree/master/sratoolkit/v2.5.7"
+		"https://github.com/evolbioinfo/dockerfiles/tree/master/sratoolkit/v2.5.7"
 	run:
 		shell('fasterq-dump --split-files SRR628582.sra -o {output}')
