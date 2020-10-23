@@ -1,0 +1,4 @@
+container: "https://github.com/evolbioinfo/dockerfiles/tree/master/sratoolkit/v2.5.7" 
+shell('echo "yo poulet"')
+shell('prefetch SRR628582')
+

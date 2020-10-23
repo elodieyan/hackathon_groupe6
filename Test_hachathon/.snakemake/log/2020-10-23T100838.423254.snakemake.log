@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 13 of /Users/Chanco/Desktop/Test_hachathon/Snakefile:
+Missing input files for rule makefastq:
+/Users/Chanco/Desktop/Test_hachathon/SRR628582.sra

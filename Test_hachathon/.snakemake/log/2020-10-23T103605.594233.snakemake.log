@@ -1,0 +1,3 @@
+CalledProcessError in line 2 of /Users/Chanco/Desktop/Test_hachathon/Snakefile:
+Command 'set -euo pipefail;  prefetch SRR628582' returned non-zero exit status 127.
+  File "/Users/Chanco/Desktop/Test_hachathon/Snakefile", line 2, in <module>

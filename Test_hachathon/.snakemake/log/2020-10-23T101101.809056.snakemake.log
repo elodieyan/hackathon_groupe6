@@ -1,0 +1,19 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	downloading
+	1	makefastq
+	3
+
+[Fri Oct 23 10:11:01 2020]
+rule downloading:
+    output: SRR628582.sra
+    jobid: 2
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /Users/Chanco/Desktop/Test_hachathon/.snakemake/log/2020-10-23T101101.809056.snakemake.log
