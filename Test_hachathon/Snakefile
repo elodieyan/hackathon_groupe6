@@ -1,9 +1,9 @@
 #!/bin/bash
 
-
-
 rule makefastq:
+	output:
+
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
 	shell:
-		'fastq-dump --split-files SRR628582'
+		'fasterq-dump --split-files SRR628582'
