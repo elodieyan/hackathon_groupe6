@@ -1,6 +1,7 @@
 #!/bin/bash
+shell:('vdb-config --interactive')
 rule makefastq:
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
 	shell:
-		'list="SRR628582 SRR628583 SRR628584 SRR628585 SRR628586 SRR628587 SRR628588 SRR628589"; for i in $list; do fasterq-dump --split-files $i -O  ; done'
+		'list="SRR628582 SRR628583 SRR628584 SRR628585 SRR628586 SRR628587 SRR628588 SRR628589"; for i in $list; do fasterq-dump --split-files $i -O /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/ouptutstep1/ ; done'
