@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 rule makefastq:
 	singularity : 
 		"docker://evolbioinfo/sratoolkit:v2.5.7"
