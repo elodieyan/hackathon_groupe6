@@ -1,9 +1,4 @@
 #!/bin/bash
-rule config:
-	singularity: 
-		"docker://evolbioinfo/sratoolkit:v2.10.8"
-	shell:
-		'vdb-config --interactive'
 rule makefastq:
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
