@@ -3,4 +3,6 @@ rule makefastq:
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
 	shell:
+		'vdb-config --interactive'
+	shell:
 		'fasterq-dump -help'
