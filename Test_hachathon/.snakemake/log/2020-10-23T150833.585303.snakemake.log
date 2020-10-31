@@ -1,0 +1,27 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	makefastq
+	2
+
+[Fri Oct 23 15:08:33 2020]
+rule makefastq:
+    output: /Users/Chanco/Desktop/Test_hachathon/essai.fastq
+    jobid: 1
+
+[Fri Oct 23 15:08:33 2020]
+Error in rule makefastq:
+    jobid: 1
+    output: /Users/Chanco/Desktop/Test_hachathon/essai.fastq
+    shell:
+        fasterq-dump --split-files SRR628582 > /Users/Chanco/Desktop/Test_hachathon/essai.fastq
+
+Removing output files of failed job makefastq since they might be corrupted:
+/Users/Chanco/Desktop/Test_hachathon/essai.fastq
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /Users/Chanco/Desktop/gitrepertory/hackathon_groupe6/Test_hachathon/.snakemake/log/2020-10-23T150833.585303.snakemake.log
