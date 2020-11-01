@@ -9,8 +9,7 @@ rule download:
 	priority: 50	
 	shell:
 		"""
-		list="SRR628582 SRR628583"; for i in $list; do wget -P /home/ubuntu/sraFiles/ https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/$i/$i.1; done		"""
-
+		list="SRR628582 SRR628583"; for i in $list; do wget -P /home/ubuntu/sraFiles/ https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/$i/$i.1; done			"""
 rule makefastq:
 	input:
 		"/home/ubuntu/sraFiles/{sample}.1"
