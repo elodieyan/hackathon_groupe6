@@ -1,0 +1,18 @@
+conda activate 
+conda install singularity=3.6.3
+mkdir gitrepository
+cd gitrepository
+mkdir gitrepository
+cd gitrepository/
+git clone https://github.com/elodieyan/hackathon_groupe6.git
+cd hackathon_groupe6/Test_hachathon/
+snakemake --use-singularity --cores 4
+
+#si vous avez un msg d'erreur avec marqué à un moment: Before continuing, please run: vdb-config --interactive
+
+vous faites:
+
+snakemake -s sraConfigurator # il va y avoir une fenêtre bleu avec des options qui s'ouvre, vous faites exit. Une fois que c'est revenu à la normale vous pouvez refaire snakemake --use-singularity --cores 4
+
+Prêt à déguster
+A tchao bonsoir
