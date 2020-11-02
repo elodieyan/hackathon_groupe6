@@ -11,7 +11,7 @@ rule download:
 		"sraFiles/{sample}.1"
 	shell:
 		"""
-		wget -P sraFiles/ https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{sample}/{sample}.1; done
+		wget -P sraFiles/ https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1; done
 		"""
 rule makefastq:
 	input:
