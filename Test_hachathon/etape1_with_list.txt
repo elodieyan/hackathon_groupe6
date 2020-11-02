@@ -2,8 +2,8 @@ ECHANTILLONS=["SRR628582"]
 
 rule all:
 	input:
-		"fastqFiles/{ech}.1_1.fastq".format(ech=ech) for ech in ECHANTILLONS],
-		"fastqFiles/{ech}.1_2.fastq".format(ech=ech) for ech in ECHANTILLONS]
+		["fastqFiles/{ech}.1_1.fastq".format(ech=ech) for ech in ECHANTILLONS],
+		["fastqFiles/{ech}.1_2.fastq".format(ech=ech) for ech in ECHANTILLONS]
 		
 rule download:
 	priority: 50	
