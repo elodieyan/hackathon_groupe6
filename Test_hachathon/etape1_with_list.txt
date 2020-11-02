@@ -1,4 +1,4 @@
-ECHANTILLONS=["SRR628582]
+ECHANTILLONS=["SRR628582"]
 
 rule all:
 	input:
