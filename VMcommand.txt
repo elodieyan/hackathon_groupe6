@@ -14,7 +14,7 @@ snakemake --use-singularity --cores 1 -s /home/ubuntu/gitrepository/hackathon_gr
 
 vous faites:
 
-snakemake -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/sraConfigurator # il va y avoir une fenêtre bleu avec des options qui s'ouvre, vous faites exit. Une fois que c'est revenu à la normale vous pouvez refaire:
+snakemake --use-singularity -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/sraConfigurator # il va y avoir une fenêtre bleu avec des options qui s'ouvre, vous faites exit. Une fois que c'est revenu à la normale vous pouvez refaire:
 
 snakemake --use-singularity --cores 1 -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/etape1_with_list
 
