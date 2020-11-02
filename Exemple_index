@@ -1,4 +1,7 @@
 # Index du génome de référence avant l'alignement des lectures (séquences)
+
+bwa_version = "0.7.10"
+
 rule bwa_index:
     input:
         "{genome}.fa" #2) cherche {wildcards.genome}.fa"
