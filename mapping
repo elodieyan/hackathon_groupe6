@@ -1,6 +1,6 @@
 rule all:
 	input:
-		"bamfiles/{sample}.bam
+		"bamfiles/{sample}.bam"
 rule mapping:
 	input:
 		i1 = "fastqFiles/{sample}.1_1.fastq"
