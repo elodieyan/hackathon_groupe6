@@ -14,7 +14,7 @@ rule mapping:
 		"docker://evolbioinfo/star:v2.7.6a"
 	shell:
 		"""
-		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir /home/ubuntu/data/mydatalocal/genome --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
+		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
 		"""
 
 #rule samtool_indexing:
