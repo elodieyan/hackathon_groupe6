@@ -37,6 +37,7 @@ rule download:
 	shell :
 		"""
 		wget -O {output} ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.{wildcards.chromosome}.fa.gz
+		"""
 
 rule concatChr:
 	input:
