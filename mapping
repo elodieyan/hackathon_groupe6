@@ -2,8 +2,6 @@ rule all:
 	input:
 		"bamfiles/{sample}.bam"
 		
-
-
 rule mapping:
 	input:
 		i1 = "fastqFiles/{sample}.1_1.fastq"
@@ -11,6 +9,10 @@ rule mapping:
 
 	output: 
 		"bamfiles/{sample}.bam"
+
+	singularity:
+		"docker://evolbioinfo/star:v2.7.6a"
+		"docker://evolbioinfo/samtools:v1.11"
 		
 	Run:
 		
