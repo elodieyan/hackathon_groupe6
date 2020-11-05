@@ -1,17 +1,21 @@
-K = ["chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22", "chrM", "chrX", "chrY"]
+KLIST = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "MT", "X", "Y"]
 
 rule all:
-	input: expand("{kname}.fa", kname=K)
+	input:
+		"results/genome.fa.gz"
 
-rule gunzip:
-	input: "{kname}.fa.gz"
-	output: "{kname}.fa"
-	singularity: "docker://evolbioinfo/ubuntu:v2.5.7"
-	shell: "gunzip -c {input} > {output}"
-
+rule concatChr:
+	input:
+		expand("results/chr/{chromosome}.fa.gz", chromosome=KLIST)
+	output:
+		"results/genome.fa.gz"
+	shell:
+		"gunzip -c {input} | gzip -c > {output}"
+	
 rule download:
-	output: "{kname}.fa.gz"
-	shell : """
-		wget http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/{kname}.fa.gz -O {output}
+	output:
+		"results/chr/{chromosome}.fa.gz"
+	shell :
 		"""
-
+		wget -O {output} ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.{wildcards.chromosome}.fa.gz
+		"""
