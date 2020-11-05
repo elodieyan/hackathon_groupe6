@@ -1,20 +1,15 @@
 rule all:
 	input:
 		"bamfiles/{sample}.bam"
-		
 rule mapping:
 	input:
 		i1 = "fastqFiles/{sample}.1_1.fastq"
 		i2 = "fastqFiles/{sample}.1_2.fastq"
-
 	output: 
 		"bamfiles/{sample}.bam"
-
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
 		"docker://evolbioinfo/samtools:v1.11"
-		
 	run:
-		
 		shell("STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4 \ --outFilterMultimapNmax 10 --genomeDir genome/ --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
 		shell("samtools index bamfiles/*.bam")
