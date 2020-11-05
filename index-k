@@ -5,7 +5,7 @@ rule index:
 		"docker://evolbioinfo/star:v2.7.6a"
 	shell :
 		"""
-		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input} --limitGenomeGenerateRAM 25000000000
+		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
 		"""
 
 rule gunzipGenome:
