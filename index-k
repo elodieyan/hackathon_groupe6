@@ -1,12 +1,19 @@
-rule all:
-	input: "genome_index.fa"
-
 rule index:
-	input: "results/genome.fa.gz"
-	output: "genome_index.fa"
-	singularity: "docker://evolbioinfo/star:v2.7.6a"
-	shell : """
-		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir results/ --genomeFastaFiles {output}
+	input: 
+		"results/genome.fa"
+	singularity: 
+		"docker://evolbioinfo/star:v2.7.6a"
+	shell :
+		"""
+		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
 		"""
 
-
+rule gunzipGenome:
+	input:
+		"results/genome.fa.gz"
+	output:
+		"results/genome.fa"
+	shell:
+		"""
+		gunzip -c {input} > {output}
+		"""
