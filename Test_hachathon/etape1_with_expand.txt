@@ -8,13 +8,11 @@ rule all:
 rule makefastq:
 	input:
 		"results/sraFiles/{sample}.1"
-	output:
-		"results/fastqFiles/{sample}_{id}.fastq"
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
 	shell: 
 		"""
-		fastq-dump --split-files {input} > {output}
+		fastq-dump --split-files {input} -O results/fastqFiles/
 		"""
 
 rule download:
