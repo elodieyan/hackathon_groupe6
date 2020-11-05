@@ -1,0 +1,67 @@
+ECHANTILLONS=["SRR628582","SRR628583","SRR628584","SRR628585","SRR628586","SRR628587","SRR628588","SRR628589"]
+
+KLIST = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "MT", "X", "Y"]
+
+### Etape 1
+
+rule all:
+	input:
+		["fastqFiles/{ech}.1_1.fastq".format(ech=ech) for ech in ECHANTILLONS],
+		["fastqFiles/{ech}.1_2.fastq".format(ech=ech) for ech in ECHANTILLONS]
+		
+rule download:
+	priority: 50	
+	output: 
+		["sraFiles/{ech}.1".format(ech=ech) for ech in ECHANTILLONS]
+	shell:
+		"""
+		list="SRR628582 SRR628583 SRR628584 SRR628585 SRR628586 SRR628587 SRR628588 SRR628589"; for i in $list; do wget -P sraFiles/ https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/$i/$i.1; done
+		"""
+rule makefastq:
+	input:
+		"sraFiles/{sample}.1"
+	output:
+		"fastqFiles/{sample}.1_1.fastq",
+		"fastqFiles/{sample}.1_2.fastq"
+	singularity: 
+		"docker://evolbioinfo/sratoolkit:v2.10.8"
+	shell: 
+		"""
+		fastq-dump --split-files {input} -O fastqFiles/ 		
+
+#### Etape 2		"""
+
+rule download:
+	output:
+		"chromosomes/{chromosome}.fa.gz"
+	shell :
+		"""
+		wget -O {output} ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.{wildcards.chromosome}.fa.gz
+
+rule concatChr:
+	input:
+		expand("chromosomes/{chromosome}.fa.gz", chromosome=KLIST)
+	output:
+		"genome/genome.fa.gz"
+	shell:
+		"gunzip -c {input} | gzip -c > {output}"
+
+rule gunzipGenome:
+	input:
+		"genome/genome.fa.gz"
+	output:
+		"genome/genome.fa"
+	shell:
+		"""
+		gunzip -c {input} > {output}
+		"""
+
+rule index:
+	input: 
+		"genome/genome.fa"
+	singularity: 
+		"docker://evolbioinfo/star:v2.7.6a"
+	shell :
+		"""
+		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
+		"""
