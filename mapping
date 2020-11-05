@@ -16,4 +16,13 @@ rule mapping:
 		"""
 		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome/ --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
 		"""
+
+#rule samtool_indexing:
+#	
+#	singularity:
+#		"docker:evolbioinfo/samtools:v1.11"
+#	shell:
+#		"""
+#		samtools index *.bam
+#		"""
 		
