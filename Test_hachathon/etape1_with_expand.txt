@@ -14,7 +14,7 @@ rule makefastq:
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
 	shell: 
 		"""
-		fastq-dump --split-files {input} > {outputs}
+		fastq-dump --split-files {input} > {output}
 		"""
 
 rule download:
