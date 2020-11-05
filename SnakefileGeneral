@@ -6,8 +6,7 @@ KLIST = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "1
 
 rule all:
 	input:
-		["fastqFiles/{ech}.1_1.fastq".format(ech=ech) for ech in SAMPLES],
-		["fastqFiles/{ech}.1_2.fastq".format(ech=ech) for ech in SAMPLES]
+		expand("bamfiles/{sample}.bam", sample = SAMPLES)
 		
 rule download:
 	priority: 50	
@@ -65,4 +64,16 @@ rule index:
 	shell:
 		"""
 		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
+		"""
+rule mapping:
+	input:
+		i1 = "fastqFiles/{sample}.1_1.fastq",
+		i2 = "fastqFiles/{sample}.1_2.fastq"
+	output:
+		"bamfiles/{sample}.bam"
+	singularity:
+		"docker://evolbioinfo/star:v2.7.6a"
+	shell:
+		"""
+		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
 		"""
