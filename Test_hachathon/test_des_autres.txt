@@ -1,5 +1,0 @@
-rule essai:
-    input: "SRR628582"
-    output: "essai.fastq"
-    singularity: "docker://evolbioinfo/sratoolkit:v2.5.7"
-    shell: "fasterq-dump --split-files {input} > {output}"
