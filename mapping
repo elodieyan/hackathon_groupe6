@@ -5,7 +5,7 @@ rule mapping:
 	input:
 		i1 = "fastqFiles/{sample}.1_1.fastq"
 		i2 = "fastqFiles/{sample}.1_2.fastq"
-	output: 
+	output:
 		"bamfiles/{sample}.bam"
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
