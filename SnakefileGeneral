@@ -1,4 +1,4 @@
-ECHANTILLONS=["SRR628582","SRR628583","SRR628584","SRR628585","SRR628586","SRR628587","SRR628588","SRR628589"]
+SAMPLES=["SRR628582","SRR628583","SRR628584","SRR628585","SRR628586","SRR628587","SRR628588","SRR628589"]
 
 KLIST = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "MT", "X", "Y"]
 
@@ -6,8 +6,8 @@ KLIST = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "1
 
 rule all:
 	input:
-		["fastqFiles/{ech}.1_1.fastq".format(ech=ech) for ech in ECHANTILLONS],
-		["fastqFiles/{ech}.1_2.fastq".format(ech=ech) for ech in ECHANTILLONS]
+		["fastqFiles/{ech}.1_1.fastq".format(ech=ech) for ech in SAMPLES],
+		["fastqFiles/{ech}.1_2.fastq".format(ech=ech) for ech in SAMPLES]
 		
 rule download:
 	priority: 50	
@@ -61,7 +61,7 @@ rule index:
 		"genome/genome.fa"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
-	shell :
+	shell:
 		"""
 		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
 		"""
