@@ -31,7 +31,7 @@ rule makefastq:
 
 #### Etape 2		"""
 
-rule download:
+rule download_chromosomes:
 	output:
 		"chromosomes/{chromosome}.fa.gz"
 	shell :
