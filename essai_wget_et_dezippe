@@ -1,0 +1,10 @@
+rule all:
+	input :
+		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
+
+rule downloadGenomeAnnotation:
+	output :
+		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
+	run:
+		shell("wget -P results/file_genome_annotation/ ftp://ftp.ensembl.org/pub/release-101/gtf/homo_sapiens/Homo_sapiens.GRCh38.101.chr.gtf.gz")
+		shell("gunzip results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf.gz > results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf")
