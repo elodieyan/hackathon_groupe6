@@ -14,7 +14,7 @@ rule mapping:
 		"docker://evolbioinfo/star:v2.7.6a"
 		"docker://evolbioinfo/samtools:v1.11"
 		
-	Run:
+	run:
 		
 		shell("STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4 \ --outFilterMultimapNmax 10 --genomeDir genome/ --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
 		shell("samtools index bamfiles/*.bam")
