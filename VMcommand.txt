@@ -10,13 +10,9 @@ cd /home/ubuntu/data/mydatalocal/
 snakemake --use-singularity --cores 1 -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/etape1_with_list.txt
 
 
-#si vous avez un msg d'erreur avec marqué à un moment: Before continuing, please run: vdb-config --interactive
+#si vous avez un message d'erreur avec marqué à un moment: Before continuing, please run: vdb-config --interactive, vous faites:
 
-vous faites:
-
-snakemake --use-singularity -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/sraConfigurator # il va y avoir une fenêtre bleu avec des options qui s'ouvre, vous faites exit. Une fois que c'est revenu à la normale vous pouvez refaire:
+snakemake --use-singularity -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/sraConfigurator 
+#il va y avoir une fenêtre bleue avec des options qui s'ouvre, vous faites exit. Une fois que c'est revenu à la normale vous pouvez refaire:
 
 snakemake --use-singularity --cores 1 -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/etape1_with_list.txt
-
-Prêt à déguster
-A tchao bonsoir
