@@ -3,7 +3,7 @@ ID = ["1", "2"]
 
 rule all:
 	input:
-		expand("results/fastqFiles/{sample}_{id}.fastq", sample = SAMPLES, id = ID)
+		expand("results/fastqFiles/{sample}.1_{id}.fastq", sample = SAMPLES, id = ID)
 
 rule makefastq:
 	input:
