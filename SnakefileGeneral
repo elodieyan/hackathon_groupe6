@@ -10,22 +10,22 @@ rule all:
 		
 rule download_sra:
 	output: 
-		"results/sraFiles/{sample}.1"
+		"sraFiles/{sample}.1"
 	shell:
 		"""
 		wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1
 		"""
 rule makefastq:
 	input:
-		"results/sraFiles/{sample}.1"
+		"sraFiles/{sample}.1"
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
 	output:
-		"results/fastqFiles/{sample}.1_1.fastq",
-		"results/fastqFiles/{sample}.1_2.fastq"
+		"fastqFiles/{sample}.1_1.fastq",
+		"fastqFiles/{sample}.1_2.fastq"
 	shell: 
 		"""
-		fastq-dump --split-files {input} -O results/fastqFiles/
+		fastq-dump --split-files {input} -O fastqFiles/
 		"""
 #### Etape 2
 
