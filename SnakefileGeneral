@@ -1,5 +1,5 @@
+ID = ["1", "2"]
 SAMPLES=["SRR628582","SRR628583","SRR628584","SRR628585","SRR628586","SRR628587","SRR628588","SRR628589"]
-
 KLIST = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "MT", "X", "Y"]
 
 ### Etape 1
@@ -8,27 +8,26 @@ rule all:
 	input:
 		expand("bamfiles/{sample}.bam", sample = SAMPLES)
 		
-rule download:
-	priority: 50	
+rule download_sra:
 	output: 
-		["sraFiles/{ech}.1".format(ech=ech) for ech in SAMPLES]
+		"results/sraFiles/{sample}.1"
 	shell:
 		"""
-		list="SRR628582 SRR628583 SRR628584 SRR628585 SRR628586 SRR628587 SRR628588 SRR628589"; for i in $list; do wget -P sraFiles/ https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/$i/$i.1; done
+		wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1
 		"""
 rule makefastq:
 	input:
-		"sraFiles/{sample}.1"
-	output:
-		"fastqFiles/{sample}.1_1.fastq",
-		"fastqFiles/{sample}.1_2.fastq"
+		"results/sraFiles/{sample}.1"
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
+	output:
+		"results/fastqFiles/{sample}.1_1.fastq",
+		"results/fastqFiles/{sample}.1_2.fastq"
 	shell: 
 		"""
-		fastq-dump --split-files {input} -O fastqFiles/ 		
-
-#### Etape 2		"""
+		fastq-dump --split-files {input} -O results/fastqFiles/
+		"""
+#### Etape 2
 
 rule download_chromosomes:
 	output:
