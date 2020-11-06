@@ -5,7 +5,7 @@ rule index:
 		"docker://evolbioinfo/star:v2.7.6a"
 	shell :
 		"""
-		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
+		STAR --runThreadN 4 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
 		"""
 
 rule gunzipGenome:
