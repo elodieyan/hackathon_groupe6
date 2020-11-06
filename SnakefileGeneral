@@ -64,6 +64,13 @@ rule index:
 		"""
 		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
 		"""
+rule downloadGenomeAnnotation:
+	output :
+		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
+	run:
+		shell("wget -P file_genome_annotation/ ftp://ftp.ensembl.org/pub/release-101/gtf/homo_sapiens/Homo_sapiens.GRCh38.101.chr.gtf.gz")
+		shell("gunzip file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf.gz")
+
 rule mapping:
 	input:
 		i1 = "fastqFiles/{sample}.1_1.fastq",
@@ -74,5 +81,5 @@ rule mapping:
 		"docker://evolbioinfo/star:v2.7.6a"
 	shell:
 		"""
-		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
+		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir /home/ubuntu/data/mydatalocal/genome/ --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
 		"""
