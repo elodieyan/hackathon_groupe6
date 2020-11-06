@@ -10,6 +10,9 @@ rule makefastq:
 		"results/sraFiles/{sample}.1"
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
+	output:
+		"results/fastqFiles/{sample}.1_1.fastq",
+		"results/fastqFiles/{sample}.1_2.fastq"
 	shell: 
 		"""
 		fastq-dump --split-files {input} -O results/fastqFiles/
