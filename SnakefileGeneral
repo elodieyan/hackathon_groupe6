@@ -58,6 +58,8 @@ rule gunzipGenome:
 rule index:
 	input: 
 		"genome/genome.fa"
+	output:
+		"genome/{doc}"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
 	shell:

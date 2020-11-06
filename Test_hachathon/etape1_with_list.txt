@@ -16,9 +16,6 @@ rule download:
 rule makefastq:
 	input:
 		"sraFiles/{sample}.1"
-	output:
-		"fastqFiles/{sample}.1_1.fastq",
-		"fastqFiles/{sample}.1_2.fastq"
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
 	shell: 
