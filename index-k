@@ -6,7 +6,7 @@ rule index:
 	threads: 8
 	shell :
 		"""
-		STAR --runThreadN 8 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
+		STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
 		"""
 
 rule gunzipGenome:
