@@ -3,9 +3,10 @@ rule index:
 		"results/genome.fa"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
+	threads: 8
 	shell :
 		"""
-		STAR --runThreadN 4 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
+		STAR --runThreadN 8 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
 		"""
 
 rule gunzipGenome:
