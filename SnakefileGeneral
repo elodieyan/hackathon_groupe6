@@ -23,6 +23,7 @@ rule makefastq:
 	output:
 		"fastqFiles/{sample}.1_1.fastq",
 		"fastqFiles/{sample}.1_2.fastq"
+	priority: 100
 	shell: 
 		"""
 		fastq-dump --split-files {input} -O fastqFiles/
@@ -32,6 +33,7 @@ rule makefastq:
 rule download_chromosomes:
 	output:
 		"chromosomes/{chromosome}.fa.gz"
+	priority: 99
 	shell :
 		"""
 		wget -O {output} ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.{wildcards.chromosome}.fa.gz
@@ -42,6 +44,7 @@ rule concatChr:
 		expand("chromosomes/{chromosome}.fa.gz", chromosome=KLIST)
 	output:
 		"genome/genome.fa.gz"
+	priority: 98
 	shell:
 		"gunzip -c {input} | gzip -c > {output}"
 
@@ -50,6 +53,7 @@ rule gunzipGenome:
 		"genome/genome.fa.gz"
 	output:
 		"genome/genome.fa"
+	priority: 97
 	shell:
 		"""
 		gunzip -c {input} > {output}
@@ -60,28 +64,31 @@ rule index:
 		"genome/genome.fa"
 	output:
 		"genome/{doc}"
+	priority: 96
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
 	shell:
 		"""
 		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
 		"""
-rule downloadGenomeAnnotation:
-	output :
-		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
-	run:
-		shell("wget -P file_genome_annotation/ ftp://ftp.ensembl.org/pub/release-101/gtf/homo_sapiens/Homo_sapiens.GRCh38.101.chr.gtf.gz")
-		shell("gunzip file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf.gz")
-
 rule mapping:
 	input:
 		i1 = "fastqFiles/{sample}.1_1.fastq",
 		i2 = "fastqFiles/{sample}.1_2.fastq"
 	output:
 		"bamfiles/{sample}.bam"
+	priority: 94
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
 	shell:
 		"""
 		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir /home/ubuntu/data/mydatalocal/genome/ --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
 		"""
+
+rule downloadGenomeAnnotation:
+	output :
+		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
+	priority: 95
+	run:
+		shell("wget -P file_genome_annotation/ ftp://ftp.ensembl.org/pub/release-101/gtf/homo_sapiens/Homo_sapiens.GRCh38.101.chr.gtf.gz")
+		shell("gunzip file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf.gz")
