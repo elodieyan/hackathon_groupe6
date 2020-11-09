@@ -10,4 +10,6 @@ pour vous rattacher au screen vous pouvez faire:
 
 screen -r lenomduscreen
 
+ctrl + A +D pour exit le screen
+
 le nom du screen est celui que vous voyez écrit dans la liste des screens en faisant screen -l
