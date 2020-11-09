@@ -6,8 +6,8 @@ rule all:
 
 rule mapping:
 	input:
-		i1 = "fastqFiles/{sample}.1_1.fastq",
-		i2 = "fastqFiles/{sample}.1_2.fastq"
+		i1 = "results/fastqFiles/{sample}.1_1.fastq",
+		i2 = "results/fastqFiles/{sample}.1_2.fastq"
 	output:
 		"bamfiles/{sample}.bam"
 	singularity:
@@ -24,6 +24,6 @@ rule mapping:
 #		"docker:evolbioinfo/samtools:v1.11"
 #	shell:
 #		"""
-#		samtools index *.bam
+#		samtools index bamfiles/*.bam
 #		"""
 		
