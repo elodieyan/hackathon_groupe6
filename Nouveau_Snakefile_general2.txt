@@ -28,21 +28,26 @@ rule all:
 
 rule downloadGenomeAnnotation:
 	output :
-		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
-	priority: 99
+		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf",
+		"coucou.txt"
 	run:
 		shell("wget -P file_genome_annotation/ ftp://ftp.ensembl.org/pub/release-101/gtf/homo_sapiens/Homo_sapiens.GRCh38.101.chr.gtf.gz")
 		shell("gunzip file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf.gz")
+		shell("touch coucou.txt")
 
 # Téléchargement des choromosomes pour l'indexage du génome :
 
 rule download_chromosomes:
+	input:
+		"coucou.txt"
 	output:
-		"chromosomes/{chromosome}.fa.gz"
-	priority: 98
+		"chromosomes/{chromosome}.fa.gz",
+		"coucou2.txt"
 	shell :
 		"""
 		wget -O {output} ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.{wildcards.chromosome}.fa.gz
+		rm coucou.txt
+		touch coucou2.txt
 		"""
 
 
@@ -51,28 +56,35 @@ rule download_chromosomes:
 # Téléchargement des fichiers .sra pour le début de l'analyse :
 
 rule download_sra:
+	input:
+		"coucou5.txt"
 	output: 
-		"sraFiles/{sample}.1"
-	priority: 94
+		"sraFiles/{sample}.1",
+		"coucou6.txt"
 	shell:
 		"""
 		wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1
+		rm coucou5.txt
+		touch coucou6.txt
 		"""
 
 # Transformation des fichiers .sra en .fastq :
 
 rule makefastq:
 	input:
-		"sraFiles/{sample}.1"
+		"sraFiles/{sample}.1",
+		"coucou6.txt"
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
 	output:
 		"fastqFiles/{sample}.1_1.fastq",
-		"fastqFiles/{sample}.1_2.fastq"
-	priority: 93
+		"fastqFiles/{sample}.1_2.fastq",
+		"coucou7.txt"
 	shell: 
 		"""
 		fastq-dump --split-files {input} -O fastqFiles/
+		rm coucou6.txt
+		touch coucou7.txt
 		"""
 
 ## Etape 2 : obtention du génome indexé : téléchargement (fait avant) et traitement des fichiers du génome humain :
@@ -81,34 +93,45 @@ rule makefastq:
 
 rule concatChr:
 	input:
-		expand("chromosomes/{chromosome}.fa.gz", chromosome=KLIST)
+		expand("chromosomes/{chromosome}.fa.gz", chromosome=KLIST),
+		"coucou2.txt"
 	output:
-		"genome/genome.fa.gz"
-	priority: 97
+		"genome/genome.fa.gz",
+		"coucou3.txt"
 	shell:
-		"gunzip -c {input} | gzip -c > {output}"
+		"""
+		gunzip -c {input} | gzip -c > {output}
+		rm coucou2.txt
+		touch coucou3.txt
+		"""
 
 
 # décompresser le fichier du génome entier obtenu :
 
 rule gunzipGenome:
 	input:
-		"genome/genome.fa.gz"
+		"genome/genome.fa.gz",
+		"coucou3.txt"
 	output:
-		"genome/genome.fa"
+		"genome/genome.fa",
+		"coucou4.txt"
 	priority: 96
 	shell:
 		"""
 		gunzip -c {input} > {output}
+		rm coucou3.txt
+		touch coucou4.txt
 		"""
 
 # indexer le génome obtenu :
 
 rule index:
 	input: 
-		"genome/genome.fa"
+		"genome/genome.fa",
+		"coucou4.txt"
 	output:
-		"genome/{doc}"
+		"genome/{doc}",
+		"coucou5.txt"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
 	threads: 4
@@ -116,6 +139,8 @@ rule index:
 	shell:
 		"""
 		STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
+		rm coucou4.txt
+		touch coucou5.txt
 		"""
 
 ## Etape 3 : mapping des .fastq sur le génome indexé : 
@@ -123,9 +148,11 @@ rule index:
 rule mapping:
 	input:
 		i1 = "results/fastqFiles/{sample}.1_1.fastq",
-		i2 = "results/fastqFiles/{sample}.1_2.fastq"
+		i2 = "results/fastqFiles/{sample}.1_2.fastq",
+		"coucou7.txt"
 	output:
-		"bamfiles/{sample}.bam"
+		"bamfiles/{sample}.bam",
+		"coucou8.txt"
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
 	threads: 16
@@ -133,6 +160,8 @@ rule mapping:
 	shell:
 		"""
 		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome --readFilesIn {input.i1} {input.i2} --runThreadN {threads} --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory --limitBAMsortRAM 100000000000 > {output}
+		rm coucou7.txt
+		touch coucou8.txt
 		"""
 
 ## Etape 4 : compter les reads : 
@@ -140,7 +169,8 @@ rule mapping:
 rule counting:
 	input:
     		i1 = "bamfiles/{sample}.bam",
-		gtf = "results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
+		gtf = "results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf",
+		"coucou8.txt"
 	output:
 		"countfiles/{sample}.counts"
 	singularity:
