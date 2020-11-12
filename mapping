@@ -12,7 +12,7 @@ rule mapping:
 		"bamfiles/{sample}.bam"
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
-	threads: 4
+	threads: 16
 	shell:
 		"""
 		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome --readFilesIn {input.i1} {input.i2} --runThreadN {threads} --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory --limitBAMsortRAM 100000000000 > {output}
