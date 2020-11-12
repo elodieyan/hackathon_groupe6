@@ -8,9 +8,9 @@ rule all:
 
 rule counting:
 	input:
-    "bamfiles/{sample}.bam"
+    		"bamfiles/{sample}.bam"
 	output:
-		#countfiles/{samples}.counts
+		countfiles/{samples}.counts
 	singularity:
 		"evolbioinfo/subread:v2.0.1"
 	threads: 4
