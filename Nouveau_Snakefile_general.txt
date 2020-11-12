@@ -53,7 +53,7 @@ rule download_chromosomes:
 rule download_sra:
 	output: 
 		"sraFiles/{sample}.1"
-	priority: 97
+	priority: 94
 	shell:
 		"""
 		wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1
@@ -69,7 +69,7 @@ rule makefastq:
 	output:
 		"fastqFiles/{sample}.1_1.fastq",
 		"fastqFiles/{sample}.1_2.fastq"
-	priority: 100
+	priority: 93
 	shell: 
 		"""
 		fastq-dump --split-files {input} -O fastqFiles/
@@ -84,6 +84,7 @@ rule concatChr:
 		expand("chromosomes/{chromosome}.fa.gz", chromosome=KLIST)
 	output:
 		"genome/genome.fa.gz"
+	priority: 97
 	shell:
 		"gunzip -c {input} | gzip -c > {output}"
 
@@ -95,6 +96,7 @@ rule gunzipGenome:
 		"genome/genome.fa.gz"
 	output:
 		"genome/genome.fa"
+	priority: 96
 	shell:
 		"""
 		gunzip -c {input} > {output}
@@ -109,7 +111,8 @@ rule index:
 		"genome/{doc}"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
-	threads: 4	
+	threads: 4
+	priority: 95	
 	shell:
 		"""
 		STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
@@ -126,6 +129,7 @@ rule mapping:
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
 	threads: 16
+	priority: 92
 	shell:
 		"""
 		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome --readFilesIn {input.i1} {input.i2} --runThreadN {threads} --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory --limitBAMsortRAM 100000000000 > {output}
@@ -142,6 +146,7 @@ rule counting:
 	singularity:
 		"docker://evolbioinfo/subread:v2.0.1"
 	threads: 4
+	priority: 91
 	shell:
 		"""
 		featureCounts -T {threads} -t gene -g gene_id -s 0 -a {input.gtf} -o {output} {input.i1}
