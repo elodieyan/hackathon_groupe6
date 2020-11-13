@@ -39,7 +39,7 @@ rule all:
 rule download_sra:
 	output: 
 		"sraFiles/{sample}.1"
-	priority: 99
+	#priority: 99
 	run:
 		shell("wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1")
 
@@ -53,7 +53,7 @@ rule makefastq:
 	output:
 		"fastqFiles/{sample}.1_1.fastq",
 		"fastqFiles/{sample}.1_2.fastq"
-	priority: 98
+	#priority: 98
 	shell: 
 		"""
 		fastq-dump --split-files {input} -O fastqFiles/
@@ -69,7 +69,7 @@ rule makefastq:
 rule download_chromosomes:
 	output:
 		"chromosomes/{chromosome}.fa.gz"
-	priority: 97
+	#priority: 97
 	run :
 		shell("wget -O {output} ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.{wildcards.chromosome}.fa.gz")
 
@@ -81,7 +81,7 @@ rule concatChr:
 	output:
 		"genome/genome.fa.gz",
 		"coucou4.txt"
-	priority: 96
+	#priority: 96
 	run:
 		shell("gunzip -c {input} | gzip -c > {output}")
 		shell("touch coucou4.txt")
@@ -96,7 +96,7 @@ rule gunzipGenome:
 	output:
 		"genome/genome.fa",
 		"coucou5.txt"
-	priority: 95
+	#priority: 95
 	run:
 		shell("gunzip -c {input} > {output}")
 		shell("rm coucou4.txt")
@@ -109,7 +109,7 @@ rule index:
 		"genome/genome.fa"
 	output:
 		"genome/{doc}"
-	priority: 94
+	#priority: 94
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
 	threads: 4	
@@ -129,7 +129,7 @@ rule mapping:
 		"bamfiles/{sample}.bam"
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
-	priority : 93
+	#priority : 93
 	threads: 16
 	shell:
 		"""
@@ -142,7 +142,7 @@ rule mapping:
 rule downloadGenomeAnnotation:
 	output :
 		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
-	priority: 92
+	#priority: 92
 	run:
 		shell("wget -P file_genome_annotation/ ftp://ftp.ensembl.org/pub/release-101/gtf/homo_sapiens/Homo_sapiens.GRCh38.101.chr.gtf.gz")
 		shell("gunzip file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf.gz")
@@ -155,7 +155,7 @@ rule counting:
 		gtf = "results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
 	output:
 		"countfiles/{sample}.counts"
-	priority: 91
+	#priority: 91
 	singularity:
 		"docker://evolbioinfo/subread:v2.0.1"
 	threads: 4
