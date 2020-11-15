@@ -26,6 +26,7 @@ rule all:
 rule download_sra:
 	output: 
 		"sraFiles/{sample}.1"
+	threads : 2
 	shell:
 		"""
 		wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1
@@ -38,12 +39,13 @@ rule makefastq:
 		"sraFiles/{sample}.1"
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
+	threads: 2
 	output:
 		"fastqFiles/{sample}.1_1.fastq",
 		"fastqFiles/{sample}.1_2.fastq"
 	shell: 
 		"""
-		fastq-dump --split-files {input} -O fastqFiles/
+		fastq-dump --split-files {input} -O fastqFiles/ --threads {threads}
 
 		"""
 
@@ -56,7 +58,8 @@ rule makefastq:
 rule download_chromosomes:
 	output:
 		"chromosomes/{chromosome}.fa.gz"
-	shell :
+	threads: 1
+	shell:
 		"""
 		wget -O {output} ftp://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.{wildcards.chromosome}.fa.gz
 		"""
@@ -92,9 +95,10 @@ rule index:
 		"genome_index/genomeParameters.txt"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
+	threads : 4
 	shell:
 		"""
-		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome_index/ --genomeFastaFiles {input}
+		STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir genome_index/ --genomeFastaFiles {input}
 		"""
 
 ## Etape 3 : mapping des .fastq sur le génome indexé : ##
@@ -110,9 +114,10 @@ rule mapping:
 		"bamfiles/{sample}.bam"
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
+	threads: 16
 	shell:
 		"""
-		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir /home/ubuntu/data/mydatalocal/genome/ --readFilesIn {input.i1} {input.i2} --runThreadN 8 --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
+		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir /home/ubuntu/data/mydatalocal/genome/ --readFilesIn {input.i1} {input.i2} --runThreadN {threads} --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
 		"""
 
 ## Etape 4 : compter les reads : ##
@@ -141,7 +146,7 @@ rule counting:
 	priority: 91
 	singularity:
 		"docker://evolbioinfo/subread:v2.0.1"
-	threads: 4
+	threads: 2
 	shell:
 		"""
 		featureCounts -T {threads} -t gene -g gene_id -s 0 -a {input.gtf} -o {output} {input.i1}
