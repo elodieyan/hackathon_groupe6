@@ -89,12 +89,12 @@ rule index:
 	input: 
 		"genome/genome.fa"
 	output:
-		"genomeParameters.txt"
+		"genome_index/genomeParameters.txt"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
 	shell:
 		"""
-		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome/ --genomeFastaFiles {input}
+		STAR --runThreadN 1 --runMode genomeGenerate --genomeDir genome_index/ --genomeFastaFiles {input}
 		"""
 
 ## Etape 3 : mapping des .fastq sur le génome indexé : ##
@@ -105,7 +105,7 @@ rule mapping:
 	input:
 		i1 = "fastqFiles/{sample}.1_1.fastq",
 		i2 = "fastqFiles/{sample}.1_2.fastq",
-		gparam = "genomeParameters.txt"
+		gparam = "genome_index/genomeParameters.txt"
 	output:
 		"bamfiles/{sample}.bam"
 	singularity:
