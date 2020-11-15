@@ -124,7 +124,7 @@ rule mapping:
 
 rule downloadGenomeAnnotation:
 	output :
-		"results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
+		"file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
 	run:
 		shell("wget -P file_genome_annotation/ ftp://ftp.ensembl.org/pub/release-101/gtf/homo_sapiens/Homo_sapiens.GRCh38.101.chr.gtf.gz")
 		shell("gunzip file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf.gz")
@@ -135,7 +135,7 @@ rule downloadGenomeAnnotation:
 rule counting:
 	input:
     		i1 = "bamfiles/{sample}.bam",
-		gtf = "results/file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
+		gtf = "file_genome_annotation/Homo_sapiens.GRCh38.101.chr.gtf"
 	output:
 		"countfiles/{sample}.counts"
 	priority: 91
