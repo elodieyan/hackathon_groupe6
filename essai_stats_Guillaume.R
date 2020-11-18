@@ -13,7 +13,7 @@ library( "DESeq2")
 library(ggplot2)
 
 ########################################################################################################
-## La fonction DESeqDataSetFromMatrix prends en entrée :                                               #
+# La fonction DESeqDataSetFromMatrix prends en entrée :                                                #
 #                                                                                                      #
 #     - une matrice de nombres qui sont les counts                                                     #
 #     - le nom des colonnes au format data.frame, pour pouvoir faire les différences selon le nom      #
@@ -45,7 +45,8 @@ essai = as.matrix(essai)
 
 ###### récupération au format data.frame des labels :
 labels = c("SRR628582", "SRR628583", "SRR628584", "SRR628585", "SRR628586", "SRR628587", "SRR628588", "SRR628589")
-labels2 = data.frame(labels)
+mutations = c("M", "M", "M", "WT", "WT", "WT", "WT", "M")
+labels2 = data.frame(labels, mutations)
 rowlabels = test1[-1,1]
 
 ###### ajout des labels des colonnes et lignes de la matrice :
@@ -57,8 +58,15 @@ head(essai)
 
 
 ###### Etude : ce qui va pas, c'est ce qu'il y a après la petite vague parce que je sais pas ce que ça fait ! ^^
-dds = DESeqDataSetFromMatrix(countData = essai, colData = labels2, ~1)
+dds = DESeqDataSetFromMatrix(countData = essai, colData = labels2, ~mutations)
 dds2 = DESeq(dds)
 resultats = results(dds2)
 
 head(resultats)
+
+par(mfrow=c(1,1))
+with(resultats, plot(log2FoldChange, -log10(pvalue), pch=20, main="Volcano plot", xlim=c(-3,3)))
+with(subset(resultats, padj<.01 ), points(log2FoldChange, -log10(pvalue), pch=20, col="blue"))
+with(subset(resultats, padj<.01 & abs(log2FoldChange)>2), points(log2FoldChange, -log10(pvalue), pch=20, col="red"))
+
+summary(resultats)
