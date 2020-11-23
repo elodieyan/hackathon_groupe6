@@ -1,11 +1,11 @@
 ## Installer les bonnes librairies :
 
-install.packages("htmltools")
-install.packages("ggplot2")
-library(htmltools)
-install.packages("BiocManager")
-BiocManager::install("DESeq2")
-install.packages("questionr")
+#install.packages("htmltools")
+#install.packages("ggplot2")
+#library(htmltools)
+#install.packages("BiocManager")
+#BiocManager::install("DESeq2")
+#install.packages("questionr")
 
 # Charger les librairies :
 library( "DESeq2")
@@ -92,3 +92,29 @@ EnhancedVolcano(resultats,
                 FCcutoff = 1,
                 pointSize = 3.0, drawConnectors = TRUE,widthConnectors = 0.75,
                 labSize = 6.0)
+
+
+
+########################################
+# Analyse en composantes principales : #
+########################################
+
+
+#install.packages("FactoMineR")
+#install.packages("factoextra")
+library("FactoMineR")
+library("factoextra")
+
+res_pca = PCA(X = essai, graph = TRUE)
+
+essai2 = t(essai)
+res_pca2 = PCA(X = essai2, graph = TRUE)
+# --> regarder le PCA graph of individuals : on a bien 5 groupés et 3 pas groupés ! Et c'est les bons (mutés) qui sont pas groupés!
+fviz_pca_ind (res_pca2,
+              repel = TRUE, # Évite le chevauchement de texte, 
+              col.ind = mutations, # colorer by groups
+              palette = c("#00AFBB", "#E7B800"),
+              legend.title = "Groups",
+              mean.point = FALSE
+)
+
