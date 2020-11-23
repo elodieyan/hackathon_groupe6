@@ -105,10 +105,8 @@ EnhancedVolcano(resultats,
 library("FactoMineR")
 library("factoextra")
 
-res_pca = PCA(X = essai, graph = TRUE)
-
 essai2 = t(essai)
-res_pca2 = PCA(X = essai2, graph = TRUE)
+res_pca2 = PCA(X = essai2, graph = FALSE)
 # --> regarder le PCA graph of individuals : on a bien 5 groupés et 3 pas groupés ! Et c'est les bons (mutés) qui sont pas groupés!
 fviz_pca_ind (res_pca2,
               repel = TRUE, # Évite le chevauchement de texte, 
