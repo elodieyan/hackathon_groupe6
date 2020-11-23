@@ -12,14 +12,14 @@ library( "DESeq2")
 library(ggplot2)
 
 ########################################################################################################
-# La fonction DESeqDataSetFromMatrix prends en entrÈe :                                                #
+# La fonction DESeqDataSetFromMatrix prends en entr√©e :                                                #
 #                                                                                                      #
 #     - une matrice de nombres qui sont les counts                                                     #
-#     - le nom des colonnes au format data.frame, pour pouvoir faire les diffÈrences selon le nom      #
-#     - un shÈma d'analyse, et c'est l‡ que j'ai pas compris ce qu'on devait mettre                    #
+#     - le nom des colonnes au format data.frame, pour pouvoir faire les diff√©rences selon le nom      #
+#     - un sh√©ma d'analyse, et c'est l√† que j'ai pas compris ce qu'on devait mettre                    #
 ########################################################################################################
 
-###### RÈcupÈrer pour chaque sample les counts :
+###### R√©cup√©rer pour chaque sample les counts :
 
 test1 = read.table("C:/Users/Administrator/Desktop/AMI2B/Hackathon/countfiles/SRR628582.counts")
 test2 = read.table("C:/Users/Administrator/Desktop/AMI2B/Hackathon/countfiles/SRR628583.counts")
@@ -31,10 +31,10 @@ test7 = read.table("C:/Users/Administrator/Desktop/AMI2B/Hackathon/countfiles/SR
 test8 = read.table("C:/Users/Administrator/Desktop/AMI2B/Hackathon/countfiles/SRR628589.counts")
 
 ##############################################################################################################################################
-# les infos sur les counts sont dans la derniËre colonne, donc on les rÈunit dans une seule matrice aprËs les avoir transformÈs en numeric : #
+# les infos sur les counts sont dans la derni√®re colonne, donc on les r√©unit dans une seule matrice apr√®s les avoir transform√©s en numeric : #
 ##############################################################################################################################################
 
-###### assemblage des derniËeres lignes de chaque fichier en les tranformant en numeric :
+###### assemblage des derni√®eres lignes de chaque fichier en les tranformant en numeric :
 essai = data.frame(as.numeric(test1[-1,7]), as.numeric(test2[-1,7]), as.numeric(test3[-1,7])
                    , as.numeric(test4[-1,7]), as.numeric(test5[-1,7]), as.numeric(test6[-1,7]), 
                    as.numeric(test7[-1,7]), as.numeric(test8[-1,7]))
@@ -42,7 +42,7 @@ essai = data.frame(as.numeric(test1[-1,7]), as.numeric(test2[-1,7]), as.numeric(
 ###### passage au format matrix:
 essai = as.matrix(essai)
 
-###### rÈcupÈration au format data.frame des labels :
+###### r√©cup√©ration au format data.frame des labels :
 labels = c("SRR628582", "SRR628583", "SRR628584", "SRR628585", "SRR628586", "SRR628587", "SRR628588", "SRR628589")
 mutations = c("M", "M", "WT", "WT", "WT", "WT", "WT", "M")
 labels2 = data.frame(labels, mutations)
@@ -52,7 +52,7 @@ rowlabels = test1[-1,1]
 rownames(essai)=rowlabels
 colnames(essai) = labels
 
-###### regarder ‡ quoi Áa ressemble :
+###### regarder √† quoi √ßa ressemble :
 head(essai)
 
 
@@ -76,16 +76,18 @@ summary(resultats)
 
 #BiocManager::install('EnhancedVolcano')
 
-##On veut lui dire de n'afficher les noms que des gËnes Ètant trËs ‡ gauche ou trËs ‡ droite du graphe
-keyvals <- ifelse(resultats$log2FoldChange < -8, 'petit',
-  ifelse(resultats$log2FoldChange > 8, 'grand','normal'))
+
+##Comme on ne veut pas afficher de noms car cela rend le graphiqu emoins lisible
+#On veut lui dire de n'afficher les noms que des g√®nes √©tant tr√®s √† gauche ou tr√®s √† droite du graphe
+keyvals <- ifelse(resultats$log2FoldChange < -10, 'petit',
+ ifelse(resultats$log2FoldChange > 10, 'grand','normal'))
 
 #library(EnhancedVolcano)
 EnhancedVolcano(resultats,
                 lab = rownames(resultats),
                 x = 'log2FoldChange', selectLab = rownames(resultats)[which(keyvals %in% c('petit', 'grand'))],
-                y = 'pvalue', 
-                title = 'WT VS mutÈ', xlim = c(-10,10),
+                y = 'padj', 
+                title = 'WT VS mut√© avec p-value ajust√©e', xlim = c(-10,10), ylim = c(-1,20),
                 pCutoff = 0.05,
                 FCcutoff = 1,
                 pointSize = 3.0, drawConnectors = TRUE,widthConnectors = 0.75,
