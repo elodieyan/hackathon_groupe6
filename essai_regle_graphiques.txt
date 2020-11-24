@@ -1,0 +1,11 @@
+rule all:
+	input : 
+		"enhencedVolcano.png",
+		"graph_individuals_pca.png"
+
+rule Rscript_graphiques:
+	output:
+		"enhencedVolcano.png",
+		"graph_individuals_pca.png"
+	script:
+		"stats_analyse_graphs.R"
