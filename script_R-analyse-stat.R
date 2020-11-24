@@ -3,12 +3,16 @@ library("DESeq2")
 
 
 ########################################################################################################
-# La fonction DESeqDataSetFromMatrix prends en entrée :                                               #
+# La fonction DESeqDataSetFromMatrix prends en entrÃ©e :                                               #
 #                                                                                                      #
 #     - une matrice de nombres qui sont les counts                                                     #
 #     - le nom des colonnes au format data.frame, pour pouvoir faire les differences selon le nom      #
 #     - un shema d'analyse                                                                             #
 ########################################################################################################
+
+###### Recuperer le chemin (où s'exécute le script et où sont les fichiers dont on a besoin)
+dir = getwd()
+setwd(dir)
 
 ###### Recuperer pour chaque sample les counts :
 
@@ -28,7 +32,7 @@ test8 = read.table(snakemake@input[[8]])
 # les infos sur les counts sont dans la derniere colonne, donc on les reunit dans une seule matrice apres les avoir transformes en numeric : #
 ##############################################################################################################################################
 
-###### assemblage des dernièeres lignes de chaque fichier en les tranformant en numeric :
+###### assemblage des derniÃ¨eres lignes de chaque fichier en les tranformant en numeric :
 essai = data.frame(as.numeric(test1[-1,7]), as.numeric(test2[-1,7]), as.numeric(test3[-1,7])
                    , as.numeric(test4[-1,7]), as.numeric(test5[-1,7]), as.numeric(test6[-1,7]), 
                    as.numeric(test7[-1,7]), as.numeric(test8[-1,7]))
@@ -57,7 +61,7 @@ resultats = results(dds2)
 
 head(resultats)
 
-############# Ancien graphique, qu'on a remplac� par l'utilisation de EnhencedVolcano :
+############# Ancien graphique, qu'on a remplacé par l'utilisation de EnhencedVolcano :
 
 #par(mfrow=c(1,1))
 #with(resultats, plot(log2FoldChange, -log10(pvalue), pch=20, main="Volcano plot", xlim=c(-8,8)))
@@ -66,5 +70,5 @@ head(resultats)
 
 summary(resultats)
 
-save(dds, dds2, resultats, file="fichier")
+save(dds, dds2, resultats, file=snakemake@output[[1]])
 
