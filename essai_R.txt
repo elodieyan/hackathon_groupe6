@@ -4,19 +4,17 @@ rule all:
 
 rule utiliser_Rscript:
 	input:
-		script = "analyse_stat.R",
-		i1 = "/home/ubuntu/data/mydatalocal/countfiles/SRR628582.counts",
-		i2 = "/home/ubuntu/data/mydatalocal/countfiles/SRR628583.counts",
-		i3 = "/home/ubuntu/data/mydatalocal/countfiles/SRR628584.counts",
-		i4 = "/home/ubuntu/data/mydatalocal/countfiles/SRR628585.counts",
-		i5 = "/home/ubuntu/data/mydatalocal/countfiles/SRR628586.counts",
-		i6 = "/home/ubuntu/data/mydatalocal/countfiles/SRR628587.counts",
-		i7 = "/home/ubuntu/data/mydatalocal/countfiles/SRR628588.counts",
-		i8 = "/home/ubuntu/data/mydatalocal/countfiles/SRR628589.counts"
-
+		i1 = "countfiles/SRR628582.counts",
+		i2 = "countfiles/SRR628583.counts",
+		i3 = "countfiles/SRR628584.counts",
+		i4 = "countfiles/SRR628585.counts",
+		i5 = "countfiles/SRR628586.counts",
+		i6 = "countfiles/SRR628587.counts",
+		i7 = "countfiles/SRR628588.counts",
+		i8 = "countfiles/SRR628589.counts"
 	output:
 		"fichier.Rdata"
 	singularity:
 		"docker://evolbioinfo/deseq2:v1.28.1"
 	script:
-		"analyse_stat.R"
+		"script_R-analyse-stat.R"
