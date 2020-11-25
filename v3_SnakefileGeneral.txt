@@ -45,7 +45,6 @@ rule makefastq:
 		"fastqFiles/{sample}.1_2.fastq"
 	shell: 
 		"""
-		cp -r /root/.ncbi $HOME/
 		fastq-dump --split-files {input} -O fastqFiles/
 
 		"""
