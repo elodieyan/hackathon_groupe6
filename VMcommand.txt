@@ -1,21 +1,28 @@
+## Lancer l'analyse :
+# activer l'environnement Bioconda :
 conda activate 
+
+# installer Singularity version 3.6.3 nécessaire au fonctionnement de Snakemake avec les containers :
 conda install singularity=3.6.3
+
+# créer un répertoire pour héberger le repository git en local :
 mkdir gitrepository
 cd gitrepository
-mkdir gitrepository
-cd gitrepository/
 git clone https://github.com/elodieyan/hackathon_groupe6.git
-cd hackathon_groupe6/Test_hachathon/
+
+# se placer dans le répertoire mydatalocal pour pouvoir y stocker des fichiers lourds :
 cd /home/ubuntu/data/mydatalocal/
-snakemake --use-singularity --cores 1 -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/etape1_with_list.txt
 
-
-#si vous avez un message d'erreur avec marqué à un moment: Before continuing, please run: vdb-config --interactive, vous faites:
-
+# lancer le sra_configurator pour les paramètres de singularity, à faire une fois avant d'appeler tout le pipeline d'analyse :
 snakemake --use-singularity -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/sraConfigurator 
-#il va y avoir une fenêtre bleue avec des options qui s'ouvre, vous faites exit. Une fois que c'est revenu à la normale vous pouvez refaire:
+# il va y avoir une fenêtre bleue avec des options qui s'ouvre, vous faites exit. 
+# Une fois que c'est revenu à la normale, lancer le pipeline d'analyse :
 
-snakemake --use-singularity --cores 1 -s /home/ubuntu/gitrepository/hackathon_groupe6/Test_hachathon/etape1_with_list.txt
+snakemake --use-singularity --cores 16 -s /home/ubuntu/gitrepository/hackathon_groupe6/SnakefileGeneral.txt (ou quel que soit le nom qu'on lui donnera. Pour l'instant, c'est v2_SnakefileGeneral.txt
+
+
+## Obtenir une visualisation des résultats :
+input(commandes à lancer pour les fichiers R
 
 
 ## obtenir une visualisation du pipeline :
