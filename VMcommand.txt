@@ -19,7 +19,11 @@ snakemake --use-singularity --cores 1 -s /home/ubuntu/gitrepository/hackathon_gr
 
 
 ## obtenir une visualisation du pipeline :
+# Pour un graphe simple :
 snakemake -s /home/ubuntu/gitrepository/hackathon_groupe6/v2_SnakefileGeneral --forceall --rulegraph | dot -Tpdf > rulegraph.pdf
+
+# Pour un graphe encore + stylé :
+snakemake -s /home/ubuntu/gitrepository/hackathon_groupe6/v2_SnakefileGeneral --forceall --filegraph | dot -Tpdf > filegraph.pdf
 
 #Pour un DAG (illisible) :
 snakemake -s /home/ubuntu/gitrepository/hackathon_groupe6/v2_SnakefileGeneral --forceall --dag | dot -Tpdf > dag.pdf
