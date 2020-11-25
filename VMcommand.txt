@@ -20,6 +20,8 @@ snakemake --use-singularity -s /home/ubuntu/gitrepository/hackathon_groupe6/Test
 
 snakemake --use-singularity --cores 16 -s /home/ubuntu/gitrepository/hackathon_groupe6/SnakefileGeneral.txt (ou quel que soit le nom qu'on lui donnera. Pour l'instant, c'est v2_SnakefileGeneral.txt
 
+# /!\ Si votre connexion internet peu stable ou perte de session à distance car trop long, lancer la commande précédente en screen en ajoutant devant celle-ci "screen -d -m" /!\
+# Pour voir si le screen tourne toujours : "screen -list" --> si il y a encore un screen dans la Socket, c'est qu'il tourne toujours, donc attendre ; sinon, aller regarder si tous les fichiers sont là ou explorer le log de snakemake.
 
 ## Obtenir une visualisation des résultats :
 input(commandes à lancer pour les fichiers R
