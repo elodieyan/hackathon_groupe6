@@ -118,7 +118,7 @@ rule mapping:
 	threads: 16
 	shell:
 		"""
-		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome_index/ --readFilesIn {input.i1} {input.i2} --runThreadN {threads} --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory > {output}
+		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome_index/ --readFilesIn {input.i1} {input.i2} --runThreadN {threads} --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory --limitBAMsortRAM 50000000000 > {output}
 		"""
 
 ###################################
