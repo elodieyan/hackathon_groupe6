@@ -11,7 +11,7 @@ print(argument_list)
 if '--cores' in argument_list:
 	T = int(argument_list[argument_list.index('--cores') + 1])
 
-elif '--forces' in argument_list:
+elif '--force' in argument_list:
 	T = int(argument_list[argument_list.index('--forces') + 1][2:])
 
 # répartition théori:que des threads pour les branches 1 et 2 du pipeline (download sra- makefastq, download chromosomes-index)
