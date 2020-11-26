@@ -67,8 +67,7 @@ rule makefastq:
 	singularity: 
 		"docker://evolbioinfo/sratoolkit:v2.10.8"
 	output:
-		report("fastqFiles/{sample}.1_1.fastq",
-		"fastqFiles/{sample}.1_2.fastq", category = "convert SRA files to FASTQ files")
+		report(expand("fastqFiles/{sample}.1_{exp}.fastq",exp = ["1","2"]), category = "SRA to FASTQ")
 	shell: 
 		"""
 		fastq-dump --split-files {input} -O fastqFiles/
