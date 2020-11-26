@@ -1,11 +1,19 @@
 ####################################################################
 ## Snakefile Général : déroulement complet du workflow d'analyse :##
 ####################################################################
-#import getopt
 import sys
+from math import *
 argument_list = sys.argv[1:]
-T = argument_list[argument_list.index('--cores') + 1]
-print(T)
+T = int(argument_list[argument_list.index('--cores') + 1])
+
+t_branch1 = ceil(T/2)
+t_branch2 = T - t_branch1
+
+t_sra = ceil(t_branch1/4)
+t_index = ceil(T/4)
+t_read_count = ceil(T/4)
+
+print(t_sra, t_index, t_read_count)
 
 
 ## Définition des variables pour les règles suivantes :
@@ -120,7 +128,7 @@ rule mapping:
 		"bamfiles/{sample}.bam"
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
-	threads: 16
+	threads: T
 	shell:
 		"""
 		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome_index/ --readFilesIn {input.i1} {input.i2} --runThreadN {threads} --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory --limitBAMsortRAM 50000000000 > {output}
