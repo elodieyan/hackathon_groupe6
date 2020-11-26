@@ -187,7 +187,7 @@ rule analyse_stat_R:
 	input:
 		expand("countfiles/{sample}.counts", sample=SAMPLES)
 	output:
-		report("fichier.Rdata", category = "statistic analysis")
+		"fichier.Rdata"
 	singularity:
 		"docker://evolbioinfo/deseq2:v1.28.1"
 	script:
