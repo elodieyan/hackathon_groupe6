@@ -187,5 +187,5 @@ rule analyse_stat_R:
 	singularity:
 		"docker://evolbioinfo/deseq2:v1.28.1"
 	script:
-		"/home/ubuntu/hackathon_groupe6/script_R-analyse-stat.R"
+		"/home/ubuntu/hackathon_groupe6/Workflow/script_R-analyse-stat.R"
 
