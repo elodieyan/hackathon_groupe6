@@ -1,4 +1,0 @@
-Building DAG of jobs...
-MissingInputException in line 4 of /Users/Chanco/Desktop/Test_hachathon/Snakefile:
-Missing input files for rule all:
-jeessai.fastq

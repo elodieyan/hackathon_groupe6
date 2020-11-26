@@ -1,3 +1,0 @@
-CalledProcessError in line 3 of /Users/Chanco/Desktop/Test_hachathon/SnakefileTest:
-Command 'set -euo pipefail;  prefecth -h' returned non-zero exit status 127.
-  File "/Users/Chanco/Desktop/Test_hachathon/SnakefileTest", line 3, in <module>

@@ -1,4 +1,0 @@
-KeyboardInterrupt in line 3 of /Users/Chanco/Desktop/Test_hachathon/SnakefileTest.
-  File "/Users/Chanco/Desktop/Test_hachathon/SnakefileTest", line 3, in <module>
-  File "/Users/Chanco/miniconda3/envs/snakemake-tutorial/lib/python3.6/subprocess.py", line 1457, in wait
-  File "/Users/Chanco/miniconda3/envs/snakemake-tutorial/lib/python3.6/subprocess.py", line 1404, in _try_wait
