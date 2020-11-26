@@ -4,7 +4,7 @@
 
 ## Répartition du nombre de threads total
 
-import sys
+import sys, os
 from math import *
 argument_list = sys.argv[1:]
 print(argument_list)
@@ -187,7 +187,7 @@ rule analyse_stat_R:
 	input:
 		expand("countfiles/{sample}.counts", sample=SAMPLES)
 	output:
-		report("fichier.Rdata", caption = os.path.join(workflow.basedir,"report/fichier.Rdata.rst") category = "statistic analysis")
+		report("fichier.Rdata", caption = os.path.join(workflow.basedir,"report/fichier.Rdata") category = "statistic analysis")
 	singularity:
 		"docker://evolbioinfo/deseq2:v1.28.1"
 	script:
