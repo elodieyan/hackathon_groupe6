@@ -40,7 +40,7 @@ report: "report/workflow.rst"
 
 rule all:
 	input:
-		"fichier.Rdata"
+		report("fichier.Rdata", category = "final output")
 
 
 ###########################################################################################################################################
@@ -187,7 +187,7 @@ rule analyse_stat_R:
 	input:
 		expand("countfiles/{sample}.counts", sample=SAMPLES)
 	output:
-		"fichier.Rdata"
+		report("fichier.Rdata", category = "statistic analysis")
 	singularity:
 		"docker://evolbioinfo/deseq2:v1.28.1"
 	script:
