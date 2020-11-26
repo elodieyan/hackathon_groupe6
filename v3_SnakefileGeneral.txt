@@ -7,17 +7,17 @@
 import sys
 from math import *
 argument_list = sys.argv[1:]
-if '--cores' in argument_list:
-	T = int(argument_list[argument_list.index('--cores') + 1])
-	# répartition théorique des threads pour les branches 1 et 2 du pipeline (download sra- makefastq, download chromosomes-index)
-	t_branch1 = ceil(T/2)
-	t_branch2 = ceil(T - t_branch1)
-	# 1 paramètre de threads pour chaque règle le nécéssitant
+T = int(argument_list[argument_list.index('--cores') + 1])
 
-	t_sra = ceil(t_branch1/4)
-	t_makefastq = ceil(t_branch1/4)
-	t_index = ceil(t_branch2)
-	t_read_count = ceil(T/4)
+# répartition théori:que des threads pour les branches 1 et 2 du pipeline (download sra- makefastq, download chromosomes-index)
+t_branch1 = ceil(T/2)
+t_branch2 = ceil(T - t_branch1)
+
+# 1 paramètre de threads pour chaque règle le nécéssitant
+t_sra = ceil(t_branch1/4)
+t_makefastq = ceil(t_branch1/4)
+t_index = ceil(t_branch2)
+t_read_count = ceil(T/4)
 
 
 ## Définition des variables pour les règles suivantes :
