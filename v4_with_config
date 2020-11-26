@@ -7,6 +7,7 @@
 import sys
 from math import *
 argument_list = sys.argv[1:]
+print(argument_list)
 T = int(argument_list[argument_list.index('--cores') + 1])
 
 # répartition théori:que des threads pour les branches 1 et 2 du pipeline (download sra- makefastq, download chromosomes-index)
