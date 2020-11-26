@@ -70,5 +70,5 @@ head(resultats)
 
 summary(resultats)
 
-save(dds, dds2, resultats, essai, file=snakemake@output[[1]])
+save(dds, dds2, resultats, essai, mutations, file=snakemake@output[[1]])
 
