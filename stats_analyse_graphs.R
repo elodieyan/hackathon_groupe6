@@ -1,25 +1,39 @@
 
-##Pour installer le package EnhancedVolcano
-#if (!requireNamespace('BiocManager', quietly = TRUE)):
-install.packages('BiocManager')
+## Installer le package FactoMineR et factoextra pour l'ACP
+install.packages("FactoMineR")
+install.packages("factoextra")
+
+## Installer le package EnhancedVolcano pour l'affichage des résultats de l'expression différentielle :
+if (!requireNamespace('BiocManager', quietly = TRUE))
+  install.packages('BiocManager')
 
 BiocManager::install('EnhancedVolcano')
-print("coucou")
 
+# Récupérer le chemin du répertoire de travail :
 chemin = getwd()
 setwd(chemin)
 
-load("fichier.Rdata")
 
-#On enlève les NA du tableau
+## Charger l'environnement Rdata sauvegardé lors de l'analyse statistique effectuée depuis Snakemake :
+load("fichier.Rdata")
+# Si vous avez une erreur d'ouverture du fichier, mettre le chemin absolu du fichier dans load (.../fichier.Rdata)
+
+#########################################
+# Expression différentielle des gènes : #
+#########################################
+
+# On enlève les NA du tableau
 resultats <- resultats[complete.cases(resultats[,6]),]
 
-##Comme on ne veut pas afficher de noms car cela rend le graphique moins lisible
-#On veut lui dire de n'afficher les noms que des genes etant tres a gauche ou tres a droite du graphe
+## Comme on ne veut pas afficher de noms car cela rend le graphique moins lisible
+# On veut lui dire de n'afficher les noms que des genes etant tres a gauche ou tres a droite du graphe
 keyvals <- ifelse(resultats$log2FoldChange < -10, 'petit',
                   ifelse(resultats$log2FoldChange > 10, 'grand','normal'))
 
 library(EnhancedVolcano)
+
+## Création du plot pour l'expression différentielle :
+
 png(filename = "enhencedVolcano.png")
 EnhancedVolcano(resultats,
                 lab = rownames(resultats),
@@ -38,14 +52,16 @@ dev.off()
 ########################################
 
 
-install.packages("FactoMineR")
-install.packages("factoextra")
 library("FactoMineR")
 library("factoextra")
 
+# Mettre les données en forme pour l'ACP :
 essai2 = t(essai)
 res_pca2 = PCA(X = essai2, graph = FALSE)
 # --> regarder le PCA graph of individuals : on a bien 5 groupés et 3 pas groupés ! Et c'est les bons (mutés) qui sont pas groupés!
+
+## Création du plot pour l'expression différentielle :
+
 png(filename = "graph_individuals_pca.png")
 fviz_pca_ind (res_pca2,
               repel = TRUE, # Évite le chevauchement de texte, 
