@@ -17,7 +17,7 @@ git clone https://github.com/elodieyan/hackathon_groupe6.git
 cd /home/ubuntu/data/mydatalocal/
 
 # Lancer le sra_configurator pour les paramètres de Singularity, à faire une fois avant d'appeler tout le pipeline d'analyse :
-snakemake --use-singularity -s /home/ubuntu/gitrepository/hackathon_groupe6/Workflow/sraConfigurator 
+snakemake --use-singularity --cores 1 -s /home/ubuntu/gitrepository/hackathon_groupe6/Workflow/sraConfigurator 
 ## Il va y avoir une fenêtre bleue avec des options qui s'ouvre, vous faites save puis exit. 
 
 ## Une fois que c'est revenu à la normale, lancez le pipeline d'analyse :
