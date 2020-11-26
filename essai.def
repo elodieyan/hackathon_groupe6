@@ -15,5 +15,3 @@ R -e 'if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("Bi
 R -e 'BiocManager::install("DESeq")'
 R -e 'install.packages("FactoMineR")'
 R -e 'install.packages("factoextra")'
-%runscript
-exec /home/ubuntu/gitrepository/hackathon_groupe6/test_analyse_stats2.R
