@@ -13,7 +13,7 @@ t_sra = ceil(t_branch1/4)
 t_index = ceil(T/4)
 t_read_count = ceil(T/4)
 
-print(t_sra, t_index, t_read_count)
+print('sara_download:'t_sra,'indexing:', t_index, 'read_counts:',t_read_count, 'mapping',T)
 
 
 ## Définition des variables pour les règles suivantes :
@@ -40,7 +40,7 @@ rule all:
 rule download_sra:
 	output: 
 		"sraFiles/{sample}.1"
-	threads : 2
+	threads : t_sra
 	shell:
 		"""
 		wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1
@@ -108,7 +108,7 @@ rule index:
 		"genome_index/genomeParameters.txt"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
-	threads : 4
+	threads : t_index
 	shell:
 		"""
 		STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir genome_index/ --genomeFastaFiles {input}
@@ -161,7 +161,7 @@ rule counting:
 	priority: 91
 	singularity:
 		"docker://evolbioinfo/subread:v2.0.1"
-	threads: 2
+	threads: t_read_count
 	shell:
 		"""
 		featureCounts -T {threads} -t gene -g gene_id -s 0 -a {input.gtf} -o {output} {input.i1}
