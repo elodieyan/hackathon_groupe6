@@ -19,7 +19,7 @@ rule all:
 rule download_sra:
 	output: 
 		report("sraFiles/{sample}.1", category = "download SRA files")
-	threads : t_sra
+	threads : 2
 	shell:
 		"""
 		wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1
