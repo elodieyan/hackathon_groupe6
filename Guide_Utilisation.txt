@@ -25,10 +25,8 @@ snakemake --use-singularity --cores 16 -s /home/ubuntu/gitrepository/hackathon_g
 
 ##En sortie vous obtenez un fichier "fichier.Rdata", pour faire les graphique il faut ouvrir l'application R 
 #Assurez vous d'avoir des versions récentes de R et Rtools 
-#Ouvrez le fichier R stats_analyse_graphs.R et runez le, vous aurez normalement deux figures qui s'enregistre : l'ACP et le Volcano plot
+#Ouvrez le fichier R stats_analyse_graphs.R et runez le, vous aurez normalement deux figures qui s'enregistrent : l'ACP et le Volcano plot
 
-## Obtenir une visualisation des résultats :
-input(commandes à lancer pour les fichiers R
 
 
 ## obtenir une visualisation du pipeline :
