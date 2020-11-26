@@ -4,6 +4,7 @@
 import sys
 from math import *
 argument_list = sys.argv[1:]
+print(sys.argv)
 T = int(argument_list[argument_list.index('--cores') + 1])
 
 t_branch1 = ceil(T/2)
