@@ -4,20 +4,20 @@
 
 ## Répartition du nombre de threads total
 
-import sys
-from math import *
-argument_list = sys.argv[1:]
-T = int(argument_list[argument_list.index('--cores') + 1])
+#import sys
+#from math import *
+#argument_list = sys.argv[1:]
+#T = int(argument_list[argument_list.index('--cores') + 1])
 
 # répartition théori:que des threads pour les branches 1 et 2 du pipeline (download sra- makefastq, download chromosomes-index)
-t_branch1 = ceil(T/2)
-t_branch2 = ceil(T - t_branch1)
+#t_branch1 = ceil(T/2)
+#t_branch2 = ceil(T - t_branch1)
 
 # 1 paramètre de threads pour chaque règle le nécéssitant
-t_sra = ceil(t_branch1/4)
-t_makefastq = ceil(t_branch1/4)
-t_index = ceil(t_branch2)
-t_read_count = ceil(T/4)
+#t_sra = ceil(t_branch1/4)
+#t_makefastq = ceil(t_branch1/4)
+#t_index = ceil(t_branch2)
+#t_read_count = ceil(T/4)
 
 
 ## Définition des variables pour les règles suivantes :
@@ -44,7 +44,7 @@ rule all:
 rule download_sra:
 	output: 
 		"sraFiles/{sample}.1"
-	threads : t_sra
+	threads : 2
 	shell:
 		"""
 		wget -O {output} https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-5/{wildcards.sample}/{wildcards.sample}.1
@@ -60,7 +60,7 @@ rule makefastq:
 	output:
 		"fastqFiles/{sample}.1_1.fastq",
 		"fastqFiles/{sample}.1_2.fastq"
-	threads: t_makefastq
+	threads: 1
 	shell: 
 		"""
 		fastq-dump --split-files {input} -O fastqFiles/
@@ -112,7 +112,7 @@ rule index:
 		"genome_index/genomeParameters.txt"
 	singularity: 
 		"docker://evolbioinfo/star:v2.7.6a"
-	threads : t_index
+	threads : 4
 	shell:
 		"""
 		STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir genome_index/ --genomeFastaFiles {input}
@@ -132,7 +132,7 @@ rule mapping:
 		"bamfiles/{sample}.bam"
 	singularity:
 		"docker://evolbioinfo/star:v2.7.6a"
-	threads: T
+	threads: 16
 	shell:
 		"""
 		STAR --outSAMstrandField intronMotif --outFilterMismatchNmax 4  --outFilterMultimapNmax 10 --genomeDir genome_index/ --readFilesIn {input.i1} {input.i2} --runThreadN {threads} --outSAMunmapped None --outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --genomeLoad NoSharedMemory --limitBAMsortRAM 50000000000 > {output}
@@ -165,7 +165,7 @@ rule counting:
 	priority: 91
 	singularity:
 		"docker://evolbioinfo/subread:v2.0.1"
-	threads: t_read_count
+	threads: 2
 	shell:
 		"""
 		featureCounts -T {threads} -t gene -g gene_id -s 0 -a {input.gtf} -o {output} {input.i1}
