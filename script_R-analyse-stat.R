@@ -3,7 +3,7 @@ library("DESeq2")
 
 
 ########################################################################################################
-# La fonction DESeqDataSetFromMatrix prends en entrÃ©e :                                               #
+# La fonction DESeqDataSetFromMatrix prends en entree :                                                #
 #                                                                                                      #
 #     - une matrice de nombres qui sont les counts                                                     #
 #     - le nom des colonnes au format data.frame, pour pouvoir faire les differences selon le nom      #
@@ -70,5 +70,5 @@ head(resultats)
 
 summary(resultats)
 
-save(dds, dds2, resultats, file=snakemake@output[[1]])
+save(dds, dds2, resultats, essai, file=snakemake@output[[1]])
 
