@@ -13,7 +13,7 @@ t_sra = ceil(t_branch1/4)
 t_index = ceil(T/4)
 t_read_count = ceil(T/4)
 
-print('sara_download:'t_sra,'indexing:', t_index, 'read_counts:',t_read_count, 'mapping',T)
+print('sara_download:',t_sra,'indexing:', t_index, 'read_counts:',t_read_count, 'mapping',T)
 
 
 ## Définition des variables pour les règles suivantes :
