@@ -18,10 +18,14 @@ snakemake --use-singularity -s /home/ubuntu/gitrepository/hackathon_groupe6/Test
 # il va y avoir une fenêtre bleue avec des options qui s'ouvre, vous faites exit. 
 # Une fois que c'est revenu à la normale, lancer le pipeline d'analyse :
 
-snakemake --use-singularity --cores 16 -s /home/ubuntu/gitrepository/hackathon_groupe6/SnakefileGeneral.txt (ou quel que soit le nom qu'on lui donnera. Pour l'instant, c'est v2_SnakefileGeneral.txt
+snakemake --use-singularity --cores 16 -s /home/ubuntu/gitrepository/hackathon_groupe6/SnakefileGeneral.txt 
 
 # /!\ Si votre connexion internet peu stable ou perte de session à distance car trop long, lancer la commande précédente en screen en ajoutant devant celle-ci "screen -d -m" /!\
 # Pour voir si le screen tourne toujours : "screen -list" --> si il y a encore un screen dans la Socket, c'est qu'il tourne toujours, donc attendre ; sinon, aller regarder si tous les fichiers sont là ou explorer le log de snakemake.
+
+##En sortie vous obtenez un fichier "fichier.Rdata", pour faire les graphique il faut ouvrir l'application R 
+#Assurez vous d'avoir des versions récentes de R et Rtools 
+#Ouvrez le fichier R stats_analyse_graphs.R et runez le, vous aurez normalement deux figures qui s'enregistre : l'ACP et le Volcano plot
 
 ## Obtenir une visualisation des résultats :
 input(commandes à lancer pour les fichiers R
@@ -36,4 +40,6 @@ snakemake -s /home/ubuntu/gitrepository/hackathon_groupe6/v2_SnakefileGeneral --
 
 #Pour un DAG :
 snakemake -s /home/ubuntu/gitrepository/hackathon_groupe6/v2_SnakefileGeneral --forceall --dag | dot -Tpdf > dag.pdf
+
+
 
