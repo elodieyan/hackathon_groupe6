@@ -24,7 +24,7 @@ snakemake --use-singularity --cores 16 -s /home/ubuntu/gitrepository/hackathon_g
 # Pour voir si le screen tourne toujours : "screen -list" --> si il y a encore un screen dans la Socket, c'est qu'il tourne toujours, donc attendre ; sinon, aller regarder si tous les fichiers sont là ou explorer le log de snakemake.
 
 ##En sortie vous obtenez un fichier "fichier.Rdata", pour faire les graphique il faut ouvrir l'application R 
-#Assurez vous d'avoir des versions récentes de R et Rtools 
+#Assurez vous d'avoir des versions récentes de R (minimum 3.6) et Rtools 
 #Ouvrez le fichier R stats_analyse_graphs.R et runez le, vous aurez normalement deux figures qui s'enregistrent : l'ACP et le Volcano plot
 
 
