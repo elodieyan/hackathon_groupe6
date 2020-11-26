@@ -71,9 +71,9 @@ rule makefastq:
 
 		"""
 
-######################################################################################################################
-## Etape 2 : obtention du génome indexé : téléchargement (fait avant) et traitement des fichiers du génome humain : ##
-######################################################################################################################
+########################################################################################################################
+## Etape 2.1 : obtention du génome indexé : téléchargement (fait avant) et traitement des fichiers du génome humain : ##
+########################################################################################################################
 
 # Téléchargement des choromosomes pour l'indexage du génome :
 
@@ -122,9 +122,9 @@ rule index:
 		STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir genome_index/ --genomeFastaFiles {input}
 		"""
 
-#########################################################
-## Etape 3 : mapping des .fastq sur le génome indexé : ##
-#########################################################
+###########################################################
+## Etape 2.2 : mapping des .fastq sur le génome indexé : ##
+###########################################################
 
 
 rule mapping:
@@ -143,7 +143,7 @@ rule mapping:
 		"""
 
 ###################################
-## Etape 4 : compter les reads : ##
+## Etape 3 : compter les reads : ##
 ###################################
 
 
@@ -176,7 +176,7 @@ rule counting:
 		"""
 
 ####################################################
-## Etape 5 : analyser les résultats de comptage : ##
+## Etape 4 : analyser les résultats de comptage : ##
 ####################################################
 
 rule analyse_stat_R:
