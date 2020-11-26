@@ -1,6 +1,6 @@
-####################################################################
-## Snakefile Général : déroulement complet du workflow d'analyse :##
-####################################################################
+#####################################################################
+## Snakefile Général : déroulement complet du workflow d'analyse : ##
+#####################################################################
 
 ## Définition des variables pour les règles suivantes :
 
